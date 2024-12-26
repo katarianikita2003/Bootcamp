@@ -13,7 +13,7 @@ module.exports = {
     }
   },
   contracts_directory: './src/contracts/',    // Ensure this path is correct
-  contracts_build_directory: './src/abis/',   // Ensure this path is correct
+  contracts_build_directory: './src/abis',   // Ensure this path is correct
   compilers: {
     solc: {
       version: "0.8.21",  // Solidity version; change if needed

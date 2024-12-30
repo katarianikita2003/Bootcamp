@@ -43,6 +43,6 @@ contract Token {
         require(allowance[_from][msg.sender] >= _value, "Allowance exceeded");
         allowance[_from][msg.sender] -= _value;
         _transfer(_from, _to, _value);
-        return true;
+        return true;   
     }
 }

@@ -61,14 +61,6 @@ contract Exchange {
         address tokenGive;
         uint256 amountGive;
         uint256 timeStamp;
-        Status status; // Order status (Open, Filled, Cancelled)
-    }
-
-    // Enum for Order Status
-    enum Status {
-        Open,
-        Filled,
-        Cancelled
     }
 
     uint256 public nextOrderId; // To track the next order ID
@@ -147,8 +139,8 @@ contract Exchange {
             _amountGet,
             _tokenGive,
             _amountGive,
-            block.timestamp,
-            Status.Open
+            block.timestamp
+            // Status.Open
         );
         emit Order(
             orderCount,
@@ -177,37 +169,6 @@ contract Exchange {
             _order.timeStamp
         );
     }
-
-    // Fill order
-    // function fillOrder(uint256 _id) public {
-    //     _Order storage _order = orders[_id];
-    //     require(_order.id == _id, "Invalid order ID");
-    //     require(!orderFilled[_id], "Order already filled");
-    //     require(!orderCancelled[_id], "Order already cancelled");
-
-    //     uint256 feeAmount = (_order.amountGet * feePercent) / 100;
-
-    //     // Execute trade
-    //     tokens[_order.tokenGet][msg.sender] -= _order.amountGet; // Deduct from userFill
-    //     tokens[_order.tokenGet][_order.user] += _order.amountGet; // Add full amount to order creator
-    //     tokens[_order.tokenGet][feeAccount] += feeAmount; // Add fee to feeAccount
-    //     tokens[_order.tokenGive][_order.user] -= _order.amountGive; // Deduct tokenGive from order creator
-    //     tokens[_order.tokenGive][msg.sender] += _order.amountGive; // Add tokenGive to userFill
-
-    //     orderFilled[_id] = true;
-
-    //     emit Trade(
-    //         _order.id,
-    //         _order.user,
-    //         _order.tokenGet,
-    //         _order.amountGet,
-    //         _order.tokenGive,
-    //         _order.amountGive,
-    //         msg.sender,
-    //         block.timestamp
-    //     );
-    // }
-
 
     function fillOrder(uint256 _id) public {
         require(_id > 0 && _id <= orderCount, 'Invalid order ID');

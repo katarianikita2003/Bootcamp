@@ -15,6 +15,11 @@ contract Exchange {
     mapping(uint256 => bool) public orderCancelled;
     mapping(uint256 => bool) public orderFilled;
 
+    // New arrays to track order status
+    uint256[] public allOrders;       // Tracks all order IDs
+    uint256[] public cancelledOrders; // Tracks cancelled orders
+    uint256[] public filledOrders;    // Tracks filled orders
+
     // Events
     event Deposit(address token, address user, uint256 amount, uint256 balance);
     event Withdraw(
@@ -125,13 +130,38 @@ contract Exchange {
         return tokens[_token][_user];
     }
 
-    function makeOrder(
-        address _tokenGet,
-        uint256 _amountGet,
-        address _tokenGive,
-        uint256 _amountGive
-    ) public {
+    // Make an order and add it to the allOrders array
+    // function makeOrder(
+    //     address _tokenGet,
+    //     uint256 _amountGet,
+    //     address _tokenGive,
+    //     uint256 _amountGive
+    // ) public {
+    //     orderCount++;
+    //     orders[orderCount] = _Order(
+    //         orderCount,
+    //         msg.sender,
+    //         _tokenGet,
+    //         _amountGet,
+    //         _tokenGive,
+    //         _amountGive,
+    //         block.timestamp
+    //     );
+    //     allOrders.push(orderCount); // Add order to allOrders array
+    //     emit Order(
+    //         orderCount,
+    //         msg.sender,
+    //         _tokenGet,
+    //         _amountGet,
+    //         _tokenGive,
+    //         _amountGive,
+    //         block.timestamp
+    //     );
+    // }
+
+    function makeOrder(address _tokenGet,uint256 _amountGet,address _tokenGive,uint256 _amountGive) public {
         orderCount++;
+        allOrders.push(orderCount); // Add order to allOrders array
         orders[orderCount] = _Order(
             orderCount,
             msg.sender,
@@ -140,7 +170,6 @@ contract Exchange {
             _tokenGive,
             _amountGive,
             block.timestamp
-            // Status.Open
         );
         emit Order(
             orderCount,
@@ -153,12 +182,14 @@ contract Exchange {
         );
     }
 
+
     // Cancel order
     function cancelOrder(uint256 _id) public {
         _Order storage _order = orders[_id];
         require(_order.id == _id, "Invalid order ID");
         require(_order.user == msg.sender, "Unauthorized cancellation");
         orderCancelled[_id] = true;
+        cancelledOrders.push(_id); // Add cancelled order to cancelledOrders array
         emit Cancel(
             _order.id,
             msg.sender,
@@ -170,6 +201,7 @@ contract Exchange {
         );
     }
 
+    // Fill order and update filledOrders array
     function fillOrder(uint256 _id) public {
         require(_id > 0 && _id <= orderCount, 'Invalid order ID');
         require(!orderFilled[_id], 'Order already filled');
@@ -177,6 +209,7 @@ contract Exchange {
         _Order storage _order = orders[_id];
         _trade(_order.id, _order.user, _order.tokenGet, _order.amountGet, _order.tokenGive, _order.amountGive);
         orderFilled[_order.id] = true;
+        filledOrders.push(_order.id); // Add filled order to filledOrders array
     }
 
     function _trade(uint256 _orderId, address _user, address _tokenGet, uint256 _amountGet, address _tokenGive, uint256 _amountGive) internal {
@@ -192,4 +225,21 @@ contract Exchange {
         emit Trade(_orderId, _user, _tokenGet, _amountGet, _tokenGive, _amountGive, msg.sender, block.timestamp);
     }
 
+    // Getters for tracking orders
+    function getAllOrders() public view returns (_Order[] memory) {
+        _Order[] memory ordersArray = new _Order[](orderCount);
+        for (uint256 i = 0; i < orderCount; i++) {
+            ordersArray[i] = orders[i + 1]; // Assuming the order IDs start from 1
+        }
+        return ordersArray;
+    }
+
+
+    function getCancelledOrders() public view returns (uint256[] memory) {
+        return cancelledOrders;
+    }
+
+    function getFilledOrders() public view returns (uint256[] memory) {
+        return filledOrders;
+    }
 }

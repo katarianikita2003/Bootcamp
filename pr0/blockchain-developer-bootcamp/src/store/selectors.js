@@ -1,7 +1,7 @@
 import { get, groupBy, reject, maxBy, minBy } from 'lodash'
 import { createSelector } from 'reselect'
 import moment from 'moment'
-import { ETHER_ADDRESS, GREEN, RED, tokens, ether } from '../helpers'
+import { ETHER_ADDRESS, GREEN, RED, ether, tokens } from '../helpers'
 
 // TODO: Move me to helpers file
 export const formatBalance = (balance) => {
@@ -22,14 +22,14 @@ export const web3Selector = createSelector(web3, w => w)
 const tokenLoaded = state => get(state, 'token.loaded', false)
 export const tokenLoadedSelector = createSelector(tokenLoaded, tl => tl)
 
+const token = state => get(state, 'token.contract')
+export const tokenSelector = createSelector(token, t => t)
+
 const exchangeLoaded = state => get(state, 'exchange.loaded', false)
 export const exchangeLoadedSelector = createSelector(exchangeLoaded, el => el)
 
 const exchange = state => get(state, 'exchange.contract')
 export const exchangeSelector = createSelector(exchange, e => e)
-
-const token = state => get(state, 'token.contract')
-export const tokenSelector = createSelector(token, t => t)
 
 export const contractsLoadedSelector = createSelector(
   tokenLoaded,
@@ -363,3 +363,21 @@ export const exchangeTokenBalanceSelector = createSelector(
     return formatBalance(balance)
   }
 )
+
+const etherDepositAmount = state => get(state, 'exchange.etherDepositAmount', null)
+export const etherDepositAmountSelector = createSelector(etherDepositAmount, amount => amount)
+
+const etherWithdrawAmount = state => get(state, 'exchange.etherWithdrawAmount', null)
+export const etherWithdrawAmountSelector = createSelector(etherWithdrawAmount, amount => amount)
+
+const tokenDepositAmount = state => get(state, 'exchange.tokenDepositAmount', null)
+export const tokenDepositAmountSelector = createSelector(tokenDepositAmount, amount => amount)
+
+const tokenWithdrawAmount = state => get(state, 'exchange.tokenWithdrawAmount', null)
+export const tokenWithdrawAmountSelector = createSelector(tokenWithdrawAmount, amount => amount)
+
+const buyOrder = state => get(state, 'exchange.buyOrder', {})
+export const buyOrderSelector = createSelector(buyOrder, order => order)
+
+const sellOrder = state => get(state, 'exchange.sellOrder', {})
+export const sellOrderSelector = createSelector(sellOrder, order => order)

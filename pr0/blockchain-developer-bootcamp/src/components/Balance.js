@@ -5,7 +5,7 @@ import Spinner from './Spinner'
 import {
   loadBalances,
   depositEther,
-  depositToken,
+//   depositToken,
   withdrawEther,
   withdrawToken
 } from '../store/interactions'
@@ -19,15 +19,15 @@ import {
   exchangeEtherBalanceSelector,
   exchangeTokenBalanceSelector,
   balancesLoadingSelector,
-  etherDepositAmountSelector,
-  etherWithdrawAmountSelector,
-  tokenDepositAmountSelector,
-  tokenWithdrawAmountSelector,
+//   etherDepositAmountSelector,
+//   etherWithdrawAmountSelector,
+//   tokenDepositAmountSelector,
+//   tokenWithdrawAmountSelector,
 } from '../store/selectors'
 import { 
     etherDepositAmountChanged,
     etherWithdrawAmountChanged,
-    tokenDepositAmountChanged,
+    // tokenDepositAmountChanged,
     tokenWithdrawAmountChanged
  } from '../store/actions'
 const showForm = (props) => {
@@ -42,7 +42,7 @@ const showForm = (props) => {
     exchangeTokenBalance,
     etherDepositAmount,
     token,
-    tokenDepositAmount,
+    // tokenDepositAmount,
     etherWithdrawAmount,
     tokenWithdrawAmount
   } = props
@@ -133,7 +133,7 @@ const showForm = (props) => {
                 <table className="table table-dark table-sm small">
                     <tbody>
                         <tr>
-                            <td>DAPP</td>
+                            <td>BZEN</td>
                             <td>{tokenBalance}</td>
                             <td>{exchangeTokenBalance}</td>
                         </tr>

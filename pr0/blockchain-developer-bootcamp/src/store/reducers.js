@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { etherDepositAmountChanged } from './actions';
+// import { etherDepositAmountChanged } from './actions';
 
 function web3(state = {}, action) {
   switch (action.type) {

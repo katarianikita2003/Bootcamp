@@ -68,8 +68,8 @@ class MyTransactions extends Component {
                 <thead>
                   <tr>
                     <th>Time</th>
-                    <th>BZEN</th>
-                    <th>BZEN/ETH</th>
+                    <th>BZen</th>
+                    <th>BZen/ETH</th>
                   </tr>
                 </thead>
                 { this.props.showMyFilledOrders ? showMyFilledOrders(this.props) : <Spinner type="table" />}
@@ -80,7 +80,7 @@ class MyTransactions extends Component {
                 <thead>
                   <tr>
                     <th>Amount</th>
-                    <th>BZEN/ETH</th>
+                    <th>BZen/ETH</th>
                     <th>Cancel</th>
                   </tr>
                 </thead>

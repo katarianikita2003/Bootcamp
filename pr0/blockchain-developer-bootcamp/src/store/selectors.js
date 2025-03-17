@@ -299,8 +299,10 @@ export const priceChartSelector = createSelector(
 )
 
 const buildGraphData = (orders) => {
+  // Example (not strictly required, but helpful)
+  orders = orders.filter((o) => o.timestamp && !isNaN(o.timestamp))
   // Group the orders by hour for the graph
-  orders = groupBy(orders, (o) => moment.unix(o.timestamp).startOf('hour').format())
+  orders = groupBy(orders, (o) => moment.unix(o.timestamp).startOf('hour').format("YYYY-MM-DDTHH:mm:ssZ"))
   // Get each hour where data exists
   const hours = Object.keys(orders)
   // Build the graph series
@@ -314,7 +316,8 @@ const buildGraphData = (orders) => {
     const close = group[group.length - 1] // last order
 
     return({
-      x: new Date(hour),
+      // x: new Date(hour),
+      x: moment(hour).toDate(),
       y: [open.tokenPrice, high.tokenPrice, low.tokenPrice, close.tokenPrice]
     })
   })

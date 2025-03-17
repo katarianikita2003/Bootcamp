@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 
-pragma solidity ^0.8.21;
+pragma solidity ^0.7.1;
+pragma experimental ABIEncoderV2;
 
 contract Token {
     string public name = "BlockZen";
@@ -12,14 +13,21 @@ contract Token {
     mapping(address => mapping(address => uint256)) public allowance;
 
     event Transfer(address indexed from, address indexed to, uint256 value);
-    event Approval(address indexed owner, address indexed spender, uint256 value);
+    event Approval(
+        address indexed owner,
+        address indexed spender,
+        uint256 value
+    );
 
     constructor() {
         totalSupply = 1000000 * (10 ** uint256(decimals)); // 1 million tokens
         balanceOf[msg.sender] = totalSupply; // Assign all tokens to contract deployer
     }
 
-    function transfer(address _to, uint256 _value) public returns (bool success) {
+    function transfer(
+        address _to,
+        uint256 _value
+    ) public returns (bool success) {
         require(balanceOf[msg.sender] >= _value, "Insufficient balance");
         _transfer(msg.sender, _to, _value);
         return true;
@@ -32,17 +40,24 @@ contract Token {
         emit Transfer(_from, _to, _value);
     }
 
-    function approve(address _spender, uint256 _value) public returns (bool success) {
+    function approve(
+        address _spender,
+        uint256 _value
+    ) public returns (bool success) {
         allowance[msg.sender][_spender] = _value;
         emit Approval(msg.sender, _spender, _value);
         return true;
     }
 
-    function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {
+    function transferFrom(
+        address _from,
+        address _to,
+        uint256 _value
+    ) public returns (bool success) {
         require(balanceOf[_from] >= _value, "Insufficient balance");
         require(allowance[_from][msg.sender] >= _value, "Allowance exceeded");
         allowance[_from][msg.sender] -= _value;
         _transfer(_from, _to, _value);
-        return true;   
+        return true;
     }
 }

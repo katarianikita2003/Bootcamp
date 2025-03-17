@@ -1,5 +1,5 @@
-require('babel-register');
-require('babel-polyfill');
+// require('babel-register');
+// require('babel-polyfill');
 require('dotenv').config();
 
 module.exports = {
@@ -16,7 +16,7 @@ module.exports = {
   contracts_build_directory: './src/abis',   // Ensure this path is correct
   compilers: {
     solc: {
-      version: "0.8.21",  // Solidity version; change if needed
+      version: "0.7.1",  // Solidity version; change if needed
       settings: {
         optimizer: {
           enabled: true,

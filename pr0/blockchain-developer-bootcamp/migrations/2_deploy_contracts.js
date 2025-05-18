@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+// eslint-disable-next-line no-undef
 const Token = artifacts.require("Token");
 const Exchange = artifacts.require("Exchange");
 

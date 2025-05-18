@@ -10,7 +10,7 @@ import Balance from './Balance'
 import NewOrder from './NewOrder'
 
 class Content extends Component {
-  componentDidMount() {
+  componentWillMount() {
     this.loadBlockchainData(this.props)
   }
 

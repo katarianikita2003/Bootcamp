@@ -1,5 +1,6 @@
 export const chartOptions = {
   chart: {
+    type: 'candlestick',
     animations: { enabled: false },
     toolbar: { show: false },
     width: '100px'

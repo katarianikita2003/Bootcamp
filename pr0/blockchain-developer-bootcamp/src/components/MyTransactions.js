@@ -21,7 +21,7 @@ const showMyFilledOrders = (props) => {
       { myFilledOrders.map((order) => {
         return (
           <tr key={order.id}>
-            <td className="text-muted">{order.formattedTimestamp}</td>
+            <td className="text-muted">{order.tokenPrice.toFixed(2)}</td>
             <td className={`text-${order.orderTypeClass}`}>{order.orderSign}{order.tokenAmount}</td>
             <td className={`text-${order.orderTypeClass}`}>{order.tokenPrice}</td>
           </tr>

@@ -12,7 +12,7 @@ const showFilledOrders = (filledOrders) => {
       { filledOrders.map((order) => {
         return(
           <tr className={`order-${order.id}`} key={order.id}>
-            <td className="text-muted">{order.formattedTimestamp}</td>
+            <td className="text-muted">{order.tokenPrice.toFixed(2)}</td>
             <td>{order.tokenAmount}</td>
             <td className={`text-${order.tokenPriceClass}`}>{order.tokenPrice}</td>
           </tr>
